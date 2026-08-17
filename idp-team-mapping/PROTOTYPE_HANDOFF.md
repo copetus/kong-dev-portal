@@ -16,6 +16,7 @@ The prototype is visual and interaction-focused. Most actions update local React
   - `public/favicon.svg` — Kong favicon
 - Start locally: `npm install` then `npm run dev`
 - Validate: `npm run build`
+- GitHub Pages: `.github/workflows/deploy-pages.yml` builds this nested app and deploys it on pushes to `main`. Vite uses `/kong-dev-portal/` as its production base path.
 
 The application is self-contained. It does not depend on the starter-kit parent directory after cloning.
 
