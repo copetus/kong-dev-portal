@@ -20,6 +20,10 @@ const Icon = ({ name, size = 20, className = '' }) => {
     identity: <path d="M7 18a6 6 0 1 1 5.2-9h8.8l3 3-4.5 4.5-2-1.5-2 1.5-2.125-1.5H12.2A6 6 0 0 1 7 18Zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />,
     organization: <path d="M2 21V3h10v4h10v14H2Zm2-2h6v-2H4v2Zm0-4h6v-2H4v2Zm0-4h6V9H4v2Zm0-4h6V5H4v2Zm8 12h8V9h-8v10Zm2-6v-2h4v2h-4Zm0 4v-2h4v2h-4Z" />,
     chevron: <path d="m12 15.4-6-6L7.4 8l4.6 4.6L16.6 8 18 9.4l-6 6Z" />,
+    chevronLeft: <path d="M14 18L8 12L14 6L15.4 7.4L10.8 12L15.4 16.6L14 18Z" />,
+    chevronRight: <path d="M9.4 18L8 16.6L12.6 12L8 7.4L9.4 6L15.4 12L9.4 18Z" />,
+    add: <path d="M11 19V13H5V11H11V5H13V11H19V13H13V19H11Z" />,
+    copy: <path d="M5 22C4.45 22 3.97917 21.8042 3.5875 21.4125C3.19583 21.0208 3 20.55 3 20V6H5V20H16V22H5ZM9 18C8.45 18 7.97917 17.8042 7.5875 17.4125C7.19583 17.0208 7 16.55 7 16V4C7 3.45 7.19583 2.97917 7.5875 2.5875C7.97917 2.19583 8.45 2 9 2H18C18.55 2 19.0208 2.19583 19.4125 2.5875C19.8042 2.97917 20 3.45 20 4V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H9ZM9 16H18V4H9V16Z" />,
     close: <path d="m6.4 19-1.4-1.4 5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19Z" />,
     clear: <path d="m8.4 17 3.6-3.6 3.6 3.6 1.4-1.4-3.6-3.6L17 8.4 15.6 7 12 10.6 8.4 7 7 8.4l3.6 3.6L7 15.6 8.4 17ZM12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z" />,
     external: <path d="M5 21c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h7v2H5v14h14v-7h2v7c0 1.1-.9 2-2 2H5Zm4.7-5.3-1.4-1.4L17.6 5H14V3h7v7h-2V6.4l-9.3 9.3Z" />,
@@ -33,6 +37,14 @@ const Icon = ({ name, size = 20, className = '' }) => {
   return <svg className={`icon ${className}`} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">{paths[name]}</svg>
 }
 
+// The Teams page and IDP mapping use this same source of available portal teams.
+const portalTeams = [
+  { name: 'Design', description: 'Design system and product experience.', developers: 5 },
+  { name: 'Engineering', description: 'Builds and operates the platform capabilities that power Kong Air and its developer experience.', developers: 7 },
+  { name: 'Marketing team', description: 'Campaigns and product storytelling.', developers: 18 },
+  { name: 'Sales team', description: 'Partners with prospective customers to understand their technical needs, coordinate evaluations, and guide successful Kong Air adoption across their organization.', developers: 4 },
+]
+
 function Toggle({ active, disabled = false, onClick }) {
   return <button aria-disabled={disabled} aria-pressed={active} className={`toggle ${active ? 'toggle--active' : ''} ${disabled ? 'toggle--disabled' : ''}`} onClick={onClick}><span /></button>
 }
@@ -41,9 +53,95 @@ function SideItem({ icon, children, active, badge }) {
   return <div className={`side-item ${active ? 'side-item--active' : ''}`}><Icon name={icon} size={24} /><span>{children}</span>{badge && <b>{badge}</b>}</div>
 }
 
+function CompactSelect({ ariaLabel, items, onChange, value }) {
+  const [open, setOpen] = useState(false)
+  const selectRef = useRef(null)
+  const selectedItem = items.find((item) => item.value === value) ?? items[0]
+
+  useEffect(() => {
+    const closeOnOutsidePress = (event) => {
+      if (!selectRef.current?.contains(event.target)) setOpen(false)
+    }
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('mousedown', closeOnOutsidePress)
+    document.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.removeEventListener('mousedown', closeOnOutsidePress)
+      document.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [])
+
+  return <div className="compact-select" ref={selectRef}>
+    <button aria-expanded={open} aria-haspopup="listbox" aria-label={ariaLabel} className="compact-select-trigger" onClick={() => setOpen((current) => !current)} type="button"><span>{selectedItem.label}</span><Icon className={open ? 'chevron-open' : ''} name="chevron" size={18} /></button>
+    {open && <div aria-label={ariaLabel} className="compact-select-options" role="listbox">{items.map((item) => <button aria-selected={item.value === value} className={item.value === value ? 'selected' : ''} key={item.value} onClick={() => { onChange(item.value); setOpen(false) }} role="option" type="button">{item.label}</button>)}</div>}
+  </div>
+}
+
+function TeamDetailActions({ showToast }) {
+  const [actionsOpen, setActionsOpen] = useState(false)
+  return <div className="team-detail-actions"><button aria-expanded={actionsOpen} className="new-team-button" onClick={() => setActionsOpen((open) => !open)} type="button">Actions <Icon className={actionsOpen ? 'chevron-open' : ''} name="chevron" size={18} /></button>{actionsOpen && <div className="team-detail-actions-menu"><button onClick={() => { setActionsOpen(false); showToast('Edit team action selected') }} type="button">Edit team</button><button className="clear-mapping-menu-item" onClick={() => { setActionsOpen(false); showToast('Delete team action selected') }} type="button">Delete team</button></div>}</div>
+}
+
+function DevelopersContent({ mappedGroups, onSelectTeam, showToast, teams, view }) {
+  const [teamFilter, setTeamFilter] = useState('')
+  const [mappingFilter, setMappingFilter] = useState('all')
+  const developers = [
+    { name: 'Avery Chen', email: 'avery.chen@kongair.com', team: 'Engineering' },
+    { name: 'Jordan Lee', email: 'jordan.lee@kongair.com', team: 'Design' },
+    { name: 'Mina Patel', email: 'mina.patel@kongair.com', team: 'Marketing team' },
+  ]
+  const filteredTeams = teams.filter((team) => {
+    const isMapped = Boolean(mappedGroups[team.name]?.length)
+    return team.name.toLowerCase().includes(teamFilter.toLowerCase()) && (mappingFilter === 'all' || (mappingFilter === 'mapped' ? isMapped : !isMapped))
+  })
+
+  return <section className="developers-table-card">
+    {view === 'teams' ? <>
+    <div className="developers-toolbar">
+      <div className="developers-search"><Icon name="search" size={20} /><input aria-label="Search teams or developers by name" onChange={(event) => setTeamFilter(event.target.value)} placeholder="Search by name" value={teamFilter} /></div>
+      <div className="developers-filter"><span>Identity provider mapped</span><CompactSelect ariaLabel="Filter by identity provider mapping" items={[{ label: 'All', value: 'all' }, { label: 'Mapped', value: 'mapped' }, { label: 'Not mapped', value: 'unmapped' }]} onChange={setMappingFilter} value={mappingFilter} /></div>
+      <button className="new-team-button" onClick={() => showToast('New team action selected')} type="button"><Icon name="add" size={18} />New team</button>
+    </div>
+    <div className="developers-data-table" role="table">
+      <div className="developers-data-header" role="row">{['Team name', 'Description', 'Developers', 'Identity provider mapped', ''].map((heading) => <span key={heading} role="columnheader">{heading}</span>)}</div>
+      {filteredTeams.map((team) => {
+        const isMapped = Boolean(mappedGroups[team.name]?.length)
+        return <div className="developers-data-row developers-data-row--interactive" key={team.name} onClick={() => onSelectTeam(team)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onSelectTeam(team) } }} role="button" tabIndex="0"><strong>{team.name}</strong><span>{team.description}</span><span>{team.developers}</span><span className={isMapped ? 'mapping-status mapping-status--mapped' : 'mapping-status'}>{isMapped ? <Icon name="check" size={18} /> : '—'}</span><button aria-label={`Actions for ${team.name}`} className="team-more-button" onClick={(event) => { event.stopPropagation(); showToast(`${team.name} actions selected`) }} type="button"><Icon name="more" size={20} /></button></div>
+      })}
+    </div>
+    <div className="developers-pagination"><span><strong>1 to {filteredTeams.length}</strong> of {filteredTeams.length}</span><div className="page-controls"><button aria-label="Previous page" disabled type="button"><Icon name="chevronLeft" size={18} /></button><button className="current-page" type="button">1</button><button aria-label="Next page" disabled type="button"><Icon name="chevronRight" size={18} /></button></div><span>10 items per page</span></div>
+    </> : <div className="developers-list" aria-label="Developers list"><div className="developers-list-header"><div className="developers-search"><Icon name="search" size={20} /><input aria-label="Search developers by name" placeholder="Search by name" /></div><button className="new-team-button" onClick={() => showToast('Invite developer action selected')} type="button"><Icon name="add" size={18} />Invite developer</button></div><div className="developers-people-header"><span>Name</span><span>Email</span><span>Team</span></div>{developers.map((developer) => <div className="developers-person-row" key={developer.email}><strong>{developer.name}</strong><span>{developer.email}</span><span>{developer.team}</span></div>)}</div>}
+  </section>
+}
+
+function TeamDetailContent({ detailTab, onDetailTabChange, showToast, team }) {
+  const [developerFilter, setDeveloperFilter] = useState('')
+  const teamDevelopers = [
+    { name: 'Salomon Onyegbulem (you)', email: 'salomon.onyegbulem@konghq.com' },
+    { name: 'Travis Terwilligar', email: 'travis@konghq.com' },
+    { name: 'Ally Christensen', email: 'ally.christensen@konghq.com' },
+    { name: 'Missy Turco', email: 'missy.turco@konghq.com' },
+    { name: 'András Hajgató', email: 'andras.hajgato@konghq.com' },
+    { name: 'Nadia Brooks', email: 'nadia.brooks@konghq.com' },
+  ].filter((developer) => developer.name.toLowerCase().includes(developerFilter.toLowerCase()))
+  const teamId = '3124123911231321'
+
+  return <div className="team-detail-content">
+    <section className="team-about-card"><div><h2>About this team</h2><p>{team.description}</p><div className="team-id">Team ID: <code>{teamId}</code><button aria-label="Copy team ID" onClick={() => { navigator.clipboard?.writeText(teamId); showToast('Team ID copied') }} type="button"><Icon name="copy" size={16} /></button></div></div><span>Created: Aug 2, 2023, 9:19 AM</span></section>
+    <nav className="tabs team-detail-tabs">{['Developers', 'APIs', 'Applications', 'Settings'].map((tab) => <button className={detailTab === tab.toLowerCase() ? 'active' : ''} key={tab} onClick={() => onDetailTabChange(tab.toLowerCase())} type="button"><span>{tab}</span></button>)}</nav>
+    {detailTab === 'developers' ? <section className="developers-table-card team-developers-card"><div className="developers-toolbar"><div className="developers-search"><Icon name="search" size={20} /><input aria-label="Search developers by name" onChange={(event) => setDeveloperFilter(event.target.value)} placeholder="Search by name" value={developerFilter} /></div><label className="developers-filter"><span>Filters</span><select aria-label="Filter developers by email"><option>Email</option></select></label><button className="new-team-button new-developer-button" onClick={() => showToast('Add developer action selected')} type="button"><Icon name="add" size={18} />Add developer</button></div><div className="team-developers-table"><div className="team-developers-header"><span>Name</span><span>Email</span><span /></div>{teamDevelopers.map((developer) => <div className="team-developer-row" key={developer.email}><strong>{developer.name}</strong><span>{developer.email}</span><button aria-label={`Actions for ${developer.name}`} className="team-more-button" onClick={() => showToast(`${developer.name} actions selected`)} type="button"><Icon name="more" size={20} /></button></div>)}</div><div className="developers-pagination"><span><strong>1 to {teamDevelopers.length}</strong> of {teamDevelopers.length}</span><div className="page-controls"><button aria-label="Previous page" disabled type="button"><Icon name="chevronLeft" size={18} /></button><button className="current-page" type="button">1</button><button aria-label="Next page" disabled type="button"><Icon name="chevronRight" size={18} /></button></div><span>10 items per page</span></div></section> : <section className="team-detail-empty"><h2>{detailTab[0].toUpperCase() + detailTab.slice(1)}</h2><p>This section is ready for its team-specific prototype content.</p></section>}
+  </div>
+}
+
 function App() {
   const [konnectMapping, setKonnectMapping] = useState(true)
   const [connectivityOpen, setConnectivityOpen] = useState(true)
+  const [activePortalPage, setActivePortalPage] = useState('settings')
+  const [developerView, setDeveloperView] = useState('teams')
+  const [selectedTeam, setSelectedTeam] = useState(null)
+  const [teamDetailTab, setTeamDetailTab] = useState('developers')
   const [providerOpen, setProviderOpen] = useState(false)
   const [provider, setProvider] = useState(null)
   const [idpMappingEnabled, setIdpMappingEnabled] = useState(true)
@@ -76,12 +174,7 @@ function App() {
     groupsClaim: 'groups',
   })
   const oidcReady = ['issuerUri', 'clientId', 'clientSecret', 'organizationLoginPath'].every((field) => oidcForm[field].trim())
-  const teams = [
-    { name: 'Engineering', description: 'Our engineering team is a diverse group of skilled professionals dedicated to designing great products.' },
-    { name: 'Design', description: '' },
-    { name: 'Analytics', description: 'Very long team descriptions are truncated at one line' },
-  ]
-  const filteredTeams = teams.filter((team) => team.name.toLowerCase().includes(teamFilter.toLowerCase()))
+  const filteredTeams = portalTeams.filter((team) => team.name.toLowerCase().includes(teamFilter.toLowerCase()))
   const hasMappedTeams = Object.values(mappedGroups).some((groups) => groups.length > 0)
   const isLastTeamMapping = Boolean(clearMappingTeam) && Object.values(mappedGroups).filter((groups) => groups.length > 0).length === 1
   const updateOidcField = (field, value) => setOidcForm((form) => ({ ...form, [field]: value }))
@@ -193,7 +286,7 @@ function App() {
         <div className="nav-section applications">APPLICATIONS</div>
         <div className="portal-nav">
           <div className="portal-title"><Icon name="portal" size={25} /><div><strong>Dev Portal</strong><span>Kong Air</span></div></div>
-          <div className="portal-links">{navItems.map(item => <div className={item === 'Settings' ? 'portal-link selected' : 'portal-link'} key={item}>{item}{item === 'Developers' && <b>1</b>}{item === 'Applications' && <b>4</b>}</div>)}</div>
+          <div className="portal-links">{navItems.map(item => <button className={`portal-link ${activePortalPage === item.toLowerCase() ? 'selected' : ''}`} key={item} onClick={() => { if (item === 'Developers') { setActivePortalPage('developers'); setDeveloperView('teams'); setSelectedTeam(null) } if (item === 'Settings') { setActivePortalPage('settings'); setSelectedTeam(null) } }} type="button">{item}{item === 'Developers' && <b>1</b>}{item === 'Applications' && <b>4</b>}</button>)}</div>
         </div>
         <SideItem icon="dollar">Metering &amp; Billing</SideItem>
         <SideItem icon="chart">Observability</SideItem>
@@ -204,8 +297,9 @@ function App() {
       <div className="sidebar-bottom"><div className="sidebar-footer-item"><span className="org-avatar">A</span> Acme Inc.<Icon name="chevron" size={20} /></div><div className="sidebar-footer-item"><span className="flag">🇺🇸</span> US (North America)<Icon name="chevron" size={20} /></div></div>
     </aside>
     <main className="main-content">
-      <div className="page-header"><div className="breadcrumbs"><Icon className="crumb-icon" name="portal" size={18} /><a href="#dev-portal">Dev Portal</a><span>/</span><a href="#portals">Portals</a><span>/</span><a href="#kongair-partner-program">KongAir partner program</a><span>/</span></div><h1>Settings</h1><nav className="tabs">{['General', 'Custom domain', 'Security', 'Integrations', 'Team mapping', 'Audit logs'].map(tab => <button className={tab === 'Team mapping' ? 'active' : ''} key={tab}><span>{tab}</span></button>)}</nav></div>
+      <div className="page-header"><div className="breadcrumbs"><Icon className="crumb-icon" name="portal" size={18} /><a href="#dev-portal">Dev Portal</a><span>/</span><a href="#portals">KongAir</a><span>/</span>{selectedTeam && <><button className="breadcrumb-button" onClick={() => setSelectedTeam(null)} type="button">Developers</button><span>/</span><button className="breadcrumb-button" onClick={() => setSelectedTeam(null)} type="button">Teams</button><span>/</span></>}</div><h1>{selectedTeam ? selectedTeam.name : activePortalPage === 'developers' ? 'Developers' : 'Settings'}</h1>{selectedTeam && <TeamDetailActions showToast={showToast} />}<nav className="tabs">{selectedTeam ? null : activePortalPage === 'developers' ? <><button className={developerView === 'developers' ? 'active' : ''} onClick={() => setDeveloperView('developers')} type="button"><span>Developers <b>1</b></span></button><button className={developerView === 'teams' ? 'active' : ''} onClick={() => setDeveloperView('teams')} type="button"><span>Teams</span></button></> : ['General', 'Custom domain', 'Security', 'Integrations', 'Team mapping', 'Audit logs'].map(tab => <button className={tab === 'Team mapping' ? 'active' : ''} key={tab}><span>{tab}</span></button>)}</nav></div>
       <div className="content">
+        {selectedTeam ? <TeamDetailContent detailTab={teamDetailTab} onDetailTabChange={setTeamDetailTab} showToast={showToast} team={selectedTeam} /> : activePortalPage === 'developers' ? <DevelopersContent mappedGroups={mappedGroups} onSelectTeam={(team) => { setSelectedTeam(team); setTeamDetailTab('developers') }} showToast={showToast} teams={portalTeams} view={developerView} /> : <>
         <section className="tile simple-tile"><div><h2>Konnect mapping</h2><p>Manage Developer Portal team memberships with Konnect.</p></div><Toggle active={konnectMapping} onClick={() => setKonnectMapping(!konnectMapping)} /></section>
         <section className="tile idp-tile">
           <div className="tile-heading idp-heading">
@@ -251,6 +345,7 @@ function App() {
             {provider === 'OIDC' && <div className="team-pagination"><span><strong>1 to {filteredTeams.length}</strong> of {filteredTeams.length}</span><div className="page-controls"><button disabled>←</button><button className="current-page">1</button><button disabled>→</button></div><button className="page-size">15 items per page <Icon name="chevron" size={20} /></button></div>}
           </div>
         </section>
+        </>}
       </div>
     </main>
     {oidcSlideoutOpen && <div className="slideout-overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) closeOidcSlideout() }}>
