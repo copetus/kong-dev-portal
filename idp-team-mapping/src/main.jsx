@@ -15,6 +15,10 @@ const Icon = ({ name, size = 20, className = '' }) => {
     ai: <path d="M4 15c-1.67 0-3-1.33-3-3s1.33-3 3-3V7c0-1.1.9-2 2-2h3c0-1.67 1.33-3 3-3s3 1.33 3 3h3c1.1 0 2 .9 2 2v2c1.67 0 3 1.33 3 3s-1.33 3-3 3v4c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2v-4Zm5-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm6 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM8 17h8v-2H8v2Z" />,
     mesh: <path d="M6 20a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm12 0a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm-6-10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />,
     portal: <path fillRule="evenodd" d="M12 2.4h6.732L21.6 5.676v13.056L18.324 21.6H5.268L2.4 18.324V5.268L5.676 2.4H12Zm4.272 9.6a4.27 4.27 0 1 0-8.532 0 4.27 4.27 0 0 0 8.532 0Z" />,
+    web: <path d="M4 20C3.45 20 2.97917 19.8042 2.5875 19.4125C2.19583 19.0208 2 18.55 2 18V6C2 5.45 2.19583 4.97917 2.5875 4.5875C2.97917 4.19583 3.45 4 4 4H20C20.55 4 21.0208 4.19583 21.4125 4.5875C21.8042 4.97917 22 5.45 22 6V18C22 18.55 21.8042 19.0208 21.4125 19.4125C21.0208 19.8042 20.55 20 20 20H4ZM4 18H14.5V14.5H4V18ZM16.5 18H20V9H16.5V18ZM4 12.5H14.5V9H4V12.5Z" />,
+    personalVideo: <path d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.11-.9-2-2-2zm0 14H3V5h18v12z" />,
+    tablet: <path d="M12 20.5C12.2833 20.5 12.5208 20.4042 12.7125 20.2125C12.9042 20.0208 13 19.7833 13 19.5C13 19.2167 12.9042 18.9792 12.7125 18.7875C12.5208 18.5958 12.2833 18.5 12 18.5C11.7167 18.5 11.4792 18.5958 11.2875 18.7875C11.0958 18.9792 11 19.2167 11 19.5C11 19.7833 11.0958 20.0208 11.2875 20.2125C11.4792 20.4042 11.7167 20.5 12 20.5ZM5 23C4.45 23 3.97917 22.8042 3.5875 22.4125C3.19583 22.0208 3 21.55 3 21V3C3 2.45 3.19583 1.97917 3.5875 1.5875C3.97917 1.19583 4.45 1 5 1H19C19.55 1 20.0208 1.19583 20.4125 1.5875C20.8042 1.97917 21 2.45 21 3V21C21 21.55 20.8042 22.0208 20.4125 22.4125C20.0208 22.8042 19.55 23 19 23H5ZM5 18V21H19V18H5ZM5 16H19V6H5V16ZM5 4H19V3H5V4Z" />,
+    phone: <path d="M7 23C6.45 23 5.97917 22.8042 5.5875 22.4125C5.19583 22.0208 5 21.55 5 21V3C5 2.45 5.19583 1.97917 5.5875 1.5875C5.97917 1.19583 6.45 1 7 1H17C17.55 1 18.0208 1.19583 18.4125 1.5875C18.8042 1.97917 19 2.45 19 3V21C19 21.55 18.8042 22.0208 18.4125 22.4125C18.0208 22.8042 17.55 23 17 23H7ZM7 18V21H17V18H7ZM12 20.5C12.2833 20.5 12.5208 20.4042 12.7125 20.2125C12.9042 20.0208 13 19.7833 13 19.5C13 19.2167 12.9042 18.9792 12.7125 18.7875C12.5208 18.5958 12.2833 18.5 12 18.5C11.7167 18.5 11.4792 18.5958 11.2875 18.7875C11.0958 18.9792 11 19.2167 11 19.5C11 19.7833 11.0958 20.0208 11.2875 20.2125C11.4792 20.4042 11.7167 20.5 12 20.5ZM7 16H17V6H7V16ZM7 4H17V3H7V4Z" />,
     dollar: <path d="M12.025 21a1 1 0 0 1-1-1v-1.15c-.75-.17-1.408-.46-1.975-.875a4.03 4.03 0 0 1-1.375-1.75.9.9 0 0 1 .575-1.3.96.96 0 0 1 1.3.55c.28.5.64.88 1.075 1.14.43.25.97.38 1.6.38.68 0 1.26-.15 1.74-.46.47-.31.71-.79.71-1.44 0-.58-.18-1.05-.55-1.39-.37-.34-1.22-.73-2.55-1.16-1.43-.45-2.42-.99-2.95-1.61a3.4 3.4 0 0 1-.8-2.29c0-1.08.35-1.92 1.05-2.52.7-.6 1.42-.95 2.15-1.03V4a1 1 0 1 1 2 0v1.1c1.14.18 2.07.76 2.8 1.75.15.22.18.46.09.73a.94.94 0 0 1-.56.57.91.91 0 0 1-.73.01 1.65 1.65 0 0 1-.7-.49 2.6 2.6 0 0 0-1.85-.72c-.73 0-1.29.16-1.67.49-.38.32-.58.73-.58 1.21 0 .55.25.98.75 1.3.5.31 1.37.65 2.6 1 1.15.33 2.02.86 2.61 1.59.59.72.89 1.56.89 2.51 0 1.18-.35 2.08-1.05 2.7-.7.61-1.57 1-2.6 1.15V20a1 1 0 0 1-1 1Z" />,
     chart: <path d="M7 17h2v-5H7v5Zm8 0h2V7h-2v10Zm-4 0h2v-3h-2v3Zm0-5h2v-2h-2v2ZM5 21c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H5Zm0-2h14V5H5v14Z" />,
     identity: <path d="M7 18a6 6 0 1 1 5.2-9h8.8l3 3-4.5 4.5-2-1.5-2 1.5-2.125-1.5H12.2A6 6 0 0 1 7 18Zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />,
@@ -22,6 +26,9 @@ const Icon = ({ name, size = 20, className = '' }) => {
     chevron: <path d="m12 15.4-6-6L7.4 8l4.6 4.6L16.6 8 18 9.4l-6 6Z" />,
     chevronLeft: <path d="M14 18L8 12L14 6L15.4 7.4L10.8 12L15.4 16.6L14 18Z" />,
     chevronRight: <path d="M9.4 18L8 16.6L12.6 12L8 7.4L9.4 6L15.4 12L9.4 18Z" />,
+    code: <path d="M4.82499 12.025L8.69999 15.9C8.88332 16.0833 8.97499 16.3167 8.97499 16.6C8.97499 16.8833 8.88332 17.1167 8.69999 17.3C8.51665 17.4833 8.28332 17.575 7.99999 17.575C7.71665 17.575 7.48332 17.4833 7.29999 17.3L2.69999 12.7C2.59999 12.6 2.52915 12.4917 2.48749 12.375C2.44582 12.2583 2.42499 12.1333 2.42499 12C2.42499 11.8667 2.44582 11.7417 2.48749 11.625C2.52915 11.5083 2.59999 11.4 2.69999 11.3L7.29999 6.7C7.49999 6.5 7.73749 6.4 8.01249 6.4C8.28749 6.4 8.52499 6.5 8.72499 6.7C8.92499 6.9 9.02499 7.1375 9.02499 7.4125C9.02499 7.6875 8.92499 7.925 8.72499 8.125L4.82499 12.025ZM19.175 11.975L15.3 8.1C15.1167 7.91667 15.025 7.68333 15.025 7.4C15.025 7.11667 15.1167 6.88333 15.3 6.7C15.4833 6.51667 15.7167 6.425 16 6.425C16.2833 6.425 16.5167 6.51667 16.7 6.7L21.3 11.3C21.4 11.4 21.4708 11.5083 21.5125 11.625C21.5542 11.7417 21.575 11.8667 21.575 12C21.575 12.1333 21.5542 12.2583 21.5125 12.375C21.4708 12.4917 21.4 12.6 21.3 12.7L16.7 17.3C16.5 17.5 16.2667 17.5958 16 17.5875C15.7333 17.5792 15.5 17.475 15.3 17.275C15.1 17.075 15 16.8375 15 16.5625C15 16.2875 15.1 16.05 15.3 15.85L19.175 11.975Z" />,
+    sparkles: <path d="M20 12.0884V12.4355C15.7128 12.4355 14.5598 16.2296 14.5598 19.3252H14.2229C14.2229 16.2296 12.8732 12.4355 8.78272 12.4355V12.0884C13.497 12.0884 14.2229 8.29432 14.2229 5.19878H14.5598C14.5598 8.29432 15.2977 12.0884 20 12.0884ZM7.28629 11.0361C7.28629 9.27503 7.94267 7.11656 10.3813 7.11656V6.91952C7.70577 6.91952 7.28629 4.76104 7.28629 3H7.09502C7.09502 4.76104 6.68206 6.91952 4 6.91952V7.11656C6.32779 7.11656 7.09502 9.27503 7.09502 11.0361H7.28629ZM9.21089 14.1529H9.04788C9.04788 15.6531 8.69578 17.4925 6.41038 17.4925V17.6604C8.39367 17.6604 9.04788 19.4998 9.04788 21H9.21089C9.21089 19.4998 9.76948 17.6604 11.8484 17.6604V17.4925C9.56843 17.4925 9.21089 15.6531 9.21089 14.1529Z" />,
+    visibility: <path d="M12 16C13.25 16 14.3125 15.5625 15.1875 14.6875C16.0625 13.8125 16.5 12.75 16.5 11.5C16.5 10.25 16.0625 9.1875 15.1875 8.3125C14.3125 7.4375 13.25 7 12 7C10.75 7 9.6875 7.4375 8.8125 8.3125C7.9375 9.1875 7.5 10.25 7.5 11.5C7.5 12.75 7.9375 13.8125 8.8125 14.6875C9.6875 15.5625 10.75 16 12 16ZM12 14.2C11.25 14.2 10.6125 13.9375 10.0875 13.4125C9.5625 12.8875 9.3 12.25 9.3 11.5C9.3 10.75 9.5625 10.1125 10.0875 9.5875C10.6125 9.0625 11.25 8.8 12 8.8C12.75 8.8 13.3875 9.0625 13.9125 9.5875C14.4375 10.1125 14.7 10.75 14.7 11.5C14.7 12.25 14.4375 12.8875 13.9125 13.4125C13.3875 13.9375 12.75 14.2 12 14.2ZM12 19C9.56667 19 7.35 18.3208 5.35 16.9625C3.35 15.6042 1.9 13.7833 1 11.5C1.9 9.21667 3.35 7.39583 5.35 6.0375C7.35 4.67917 9.56667 4 12 4C14.4333 4 16.65 4.67917 18.65 6.0375C20.65 7.39583 22.1 9.21667 23 11.5C22.1 13.7833 20.65 15.6042 18.65 16.9625C16.65 18.3208 14.4333 19 12 19Z" />,
     add: <path d="M11 19V13H5V11H11V5H13V11H19V13H13V19H11Z" />,
     copy: <path d="M5 22C4.45 22 3.97917 21.8042 3.5875 21.4125C3.19583 21.0208 3 20.55 3 20V6H5V20H16V22H5ZM9 18C8.45 18 7.97917 17.8042 7.5875 17.4125C7.19583 17.0208 7 16.55 7 16V4C7 3.45 7.19583 2.97917 7.5875 2.5875C7.97917 2.19583 8.45 2 9 2H18C18.55 2 19.0208 2.19583 19.4125 2.5875C19.8042 2.97917 20 3.45 20 4V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H9ZM9 16H18V4H9V16Z" />,
     close: <path d="m6.4 19-1.4-1.4 5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19Z" />,
@@ -135,6 +142,91 @@ function TeamDetailContent({ detailTab, onDetailTabChange, showToast, team }) {
   </div>
 }
 
+function PortalEditorContent({ onExit, showToast }) {
+  const [paneWidths, setPaneWidths] = useState({ chat: 360, code: 480, preview: 480 })
+  const [resizingPane, setResizingPane] = useState(null)
+  const [visiblePanes, setVisiblePanes] = useState({ chat: true, code: true, preview: true })
+  const chatPaneRef = useRef(null)
+  const codePaneRef = useRef(null)
+  const previewPaneRef = useRef(null)
+  const codeLines = [
+    '---',
+    'title: Home',
+    'description: Build and innovate with our APIs',
+    '---',
+    '',
+    '::page-section',
+    '---',
+    'full-width: true',
+    '---',
+    '',
+    '::page-hero',
+    '---',
+    'title: Kong API Developer Portal',
+    'description: A customizable, unified API portal for developers.',
+    'horizontal-align: center',
+    'text-align: center',
+    '---',
+    '',
+    '# Get started',
+  ]
+  const startPaneResize = (boundary, event) => {
+    event.preventDefault()
+    const startX = event.clientX
+    const startChatWidth = chatPaneRef.current?.getBoundingClientRect().width ?? paneWidths.chat
+    const startCodeWidth = codePaneRef.current?.getBoundingClientRect().width ?? paneWidths.code
+    const startPreviewWidth = previewPaneRef.current?.getBoundingClientRect().width ?? 300
+    const chatAdjacentPane = visiblePanes.code ? 'code' : 'preview'
+    const startChatAdjacentWidth = chatAdjacentPane === 'code' ? startCodeWidth : startPreviewWidth
+    const minimumWidth = 300
+    setResizingPane(boundary)
+    const updateWidth = (moveEvent) => {
+      const delta = moveEvent.clientX - startX
+      if (boundary === 'chat') {
+        const nextChatWidth = Math.max(minimumWidth, Math.min(startChatWidth + delta, startChatWidth + startChatAdjacentWidth - minimumWidth))
+        setPaneWidths((current) => ({ ...current, chat: nextChatWidth, [chatAdjacentPane]: startChatAdjacentWidth - (nextChatWidth - startChatWidth) }))
+        return
+      }
+      const nextCodeWidth = Math.max(minimumWidth, Math.min(startCodeWidth + delta, startCodeWidth + startPreviewWidth - minimumWidth))
+      setPaneWidths((current) => ({ ...current, code: nextCodeWidth, preview: startPreviewWidth - (nextCodeWidth - startCodeWidth) }))
+    }
+    const finishResize = () => {
+      setResizingPane(null)
+      window.removeEventListener('pointermove', updateWidth)
+      window.removeEventListener('pointerup', finishResize)
+    }
+    window.addEventListener('pointermove', updateWidth)
+    window.addEventListener('pointerup', finishResize, { once: true })
+  }
+  const togglePane = (pane) => {
+    setPaneWidths((current) => ({
+      chat: visiblePanes.chat ? chatPaneRef.current?.getBoundingClientRect().width ?? current.chat : current.chat,
+      code: visiblePanes.code ? codePaneRef.current?.getBoundingClientRect().width ?? current.code : current.code,
+      preview: visiblePanes.preview ? previewPaneRef.current?.getBoundingClientRect().width ?? current.preview : current.preview,
+    }))
+    setVisiblePanes((current) => ({ ...current, [pane]: !current[pane] }))
+  }
+  const paneStyle = (pane) => ({ flex: `${paneWidths[pane]} 1 0px` })
+  return <section className="portal-editor-workspace">
+    <header className="editor-topbar"><button aria-label="Exit portal editor" className="editor-exit-button" onClick={onExit} type="button"><Icon name="chevronLeft" size={24} /></button>
+      <div className="editor-page-status"><strong>home</strong><span>Draft <Icon name="info" size={14} /></span><span>Public <Icon name="info" size={14} /></span></div>
+      <div aria-label="Toggle editor panes" className="editor-pane-toggles"><span className="editor-pane-toggle-tooltip"><button aria-label="Toggle AI pane" aria-pressed={visiblePanes.chat} className={visiblePanes.chat ? 'active' : ''} onClick={() => togglePane('chat')} type="button"><Icon name="sparkles" size={20} /></button><span role="tooltip">Ask Kai</span></span><span className="editor-pane-toggle-tooltip"><button aria-label="Toggle code pane" aria-pressed={visiblePanes.code} className={visiblePanes.code ? 'active' : ''} onClick={() => togglePane('code')} type="button"><Icon name="code" size={20} /></button><span role="tooltip">Code</span></span><span className="editor-pane-toggle-tooltip"><button aria-label="Toggle preview pane" aria-pressed={visiblePanes.preview} className={visiblePanes.preview ? 'active' : ''} onClick={() => togglePane('preview')} type="button"><Icon name="visibility" size={20} /></button><span role="tooltip">Preview</span></span></div>
+      <div className="editor-topbar-actions"><button className="editor-utility-button" onClick={() => showToast('Changes panel opened')} type="button"><Icon name="copy" size={18} />View changes</button><button aria-label="Editor help" className="editor-icon-button" type="button"><Icon name="help" size={20} /></button><button aria-label="More editor actions" className="editor-icon-button" type="button"><Icon name="more" size={20} /></button><button className="editor-publish-button" onClick={() => showToast('Portal published')} type="button">Publish</button><button className="editor-save-button" onClick={() => showToast('Portal saved')} type="button">Save</button></div>
+    </header>
+    <div className="editor-body">
+      <nav aria-label="Portal editor tools" className="editor-rail"><button aria-label="Pages" className="active" type="button"><Icon name="portal" size={22} /></button><button aria-label="Appearance" type="button"><Icon name="identity" size={22} /></button><button aria-label="Integrations" type="button"><Icon name="organization" size={22} /></button></nav>
+      <aside className="editor-page-tree"><div className="editor-tree-tabs"><button className="active" type="button">Pages</button><button type="button">Snippets</button></div><button className="editor-new-page" type="button"><Icon name="add" size={18} />New page</button><label className="editor-tree-search"><Icon name="search" size={18} /><input aria-label="Search portal pages" placeholder="Search pages" /></label><div className="editor-tree-list"><button className="editor-page-row active" type="button"><span>home</span><Icon name="more" size={18} /></button><button className="editor-page-row tree-parent" type="button"><span>pricing</span><Icon name="chevronRight" size={16} /></button><div className="editor-tree-children"><button type="button">custom</button><button type="button">enterprise</button><button type="button">startups <em>Draft</em></button></div><button className="editor-page-row tree-parent" type="button"><span>contact-us</span><Icon name="chevron" size={16} /></button><div className="editor-tree-children"><button type="button">contact form</button><button type="button">support <em>Draft</em></button></div><button className="editor-page-row tree-parent" type="button"><span>guides</span><Icon name="chevronRight" size={16} /></button></div></aside>
+      <div className={`editor-pane-area ${resizingPane ? `is-resizing is-resizing-${resizingPane}` : ''} ${visiblePanes.chat ? '' : 'chat-hidden'} ${visiblePanes.code ? '' : 'code-hidden'} ${visiblePanes.preview ? '' : 'preview-hidden'}`}>
+        <section className="editor-chat-pane editor-resizable-pane" ref={chatPaneRef} style={paneStyle('chat')}><div className="editor-pane-toolbar"><button aria-label="Open chat menu" type="button"><Icon name="more" size={20} /></button><strong>New Chat</strong><Icon name="chevron" size={16} /><button aria-label="Add context" className="editor-toolbar-action" type="button"><Icon name="add" size={20} /></button></div><div className="editor-chat-content"><div className="editor-prompt">Make this page look polished and on-brand</div><div className="editor-working"><strong>Working on it...</strong><span /><span /><span /></div></div><div className="editor-chat-input"><span>Ask a question, or use # for contexts</span><button aria-label="Send message" type="button">↑</button></div><p className="editor-chat-note">KAI is an AI-driven beta feature and can make mistakes. <a href="#learn">Learn more</a></p></section>
+        <div aria-label="Resize chat and code panes" className="editor-pane-resizer editor-pane-resizer--chat" onPointerDown={(event) => startPaneResize('chat', event)} role="separator" />
+        <section className="editor-code-pane editor-resizable-pane" ref={codePaneRef} style={paneStyle('code')}><div className="editor-pane-toolbar editor-code-toolbar"><button aria-label="Toggle page structure" type="button">☰</button><button aria-label="Code settings" type="button"><Icon name="more" size={20} /></button></div><ol className="editor-code-lines">{codeLines.map((line, index) => <li key={`${line}-${index}`} className={line.startsWith('::') ? 'directive' : line.startsWith('title') || line.startsWith('description') || line.startsWith('full-width') || line.startsWith('horizontal') || line.startsWith('text-align') ? 'property' : line.startsWith('---') ? 'divider' : ''}>{line || ' '}</li>)}</ol></section>
+        <div aria-label="Resize code and preview panes" className="editor-pane-resizer editor-pane-resizer--code" onPointerDown={(event) => startPaneResize('code', event)} role="separator" />
+        <section className="editor-preview-pane" ref={previewPaneRef} style={paneStyle('preview')}><div className="editor-pane-toolbar editor-preview-toolbar"><div aria-label="Preview device" className="editor-device-tabs"><button className="active" aria-label="Desktop preview" type="button"><Icon name="personalVideo" size={20} /></button><button aria-label="Tablet preview" type="button"><Icon name="tablet" size={20} /></button><button aria-label="Mobile preview" type="button"><Icon name="phone" size={20} /></button></div><button aria-label="Open preview in new window" className="editor-preview-external" type="button"><Icon name="external" size={20} /></button></div><div className="editor-preview-canvas"><div className="preview-nav"><Icon name="more" size={20} /><strong><Icon name="portal" size={22} />Company</strong></div><div className="preview-hero"><h2>Kong API<br />Developer Portal</h2><p>A customizable, unified API portal for developers to browse APIs, reference documentation, test endpoints, and register applications.</p><button type="button">Get started</button></div><div className="preview-pattern" /></div><div className="editor-preview-footer"><span>◎ /</span><div><button aria-label="Refresh preview" type="button">↻</button><button aria-label="Copy preview URL" type="button"><Icon name="copy" size={18} /></button></div></div></section>
+      </div>
+    </div>
+  </section>
+}
+
 function App() {
   const [konnectMapping, setKonnectMapping] = useState(true)
   const [connectivityOpen, setConnectivityOpen] = useState(true)
@@ -142,6 +234,7 @@ function App() {
   const [developerView, setDeveloperView] = useState('teams')
   const [selectedTeam, setSelectedTeam] = useState(null)
   const [teamDetailTab, setTeamDetailTab] = useState('developers')
+  const [editorReturnState, setEditorReturnState] = useState({ developerView: 'teams', page: 'settings', selectedTeam: null, teamDetailTab: 'developers' })
   const [providerOpen, setProviderOpen] = useState(false)
   const [provider, setProvider] = useState(null)
   const [idpMappingEnabled, setIdpMappingEnabled] = useState(true)
@@ -272,7 +365,7 @@ function App() {
   useEffect(() => () => window.clearTimeout(toastTimerRef.current), [])
   const navItems = ['Overview', 'Published APIs', 'Portal editor', 'Developers', 'Applications', 'Settings']
 
-  return <div className="app-shell">
+  return <div className={activePortalPage === 'portal editor' ? 'app-shell app-shell--editor' : 'app-shell'}>
     <header className="topbar">
       <div className="brand"><span className="brand-mark">◆</span><span>KONNECT</span></div>
       <div className="search"><Icon name="search" size={25} /><span>Quick search...</span><kbd>⌘K</kbd></div>
@@ -286,7 +379,7 @@ function App() {
         <div className="nav-section applications">APPLICATIONS</div>
         <div className="portal-nav">
           <div className="portal-title"><Icon name="portal" size={25} /><div><strong>Dev Portal</strong><span>Kong Air</span></div></div>
-          <div className="portal-links">{navItems.map(item => <button className={`portal-link ${activePortalPage === item.toLowerCase() ? 'selected' : ''}`} key={item} onClick={() => { if (item === 'Developers') { setActivePortalPage('developers'); setDeveloperView('teams'); setSelectedTeam(null) } if (item === 'Settings') { setActivePortalPage('settings'); setSelectedTeam(null) } }} type="button">{item}{item === 'Developers' && <b>1</b>}{item === 'Applications' && <b>4</b>}</button>)}</div>
+          <div className="portal-links">{navItems.map(item => <button className={`portal-link ${activePortalPage === item.toLowerCase() ? 'selected' : ''}`} key={item} onClick={() => { if (item === 'Developers') { setActivePortalPage('developers'); setDeveloperView('teams'); setSelectedTeam(null) } if (item === 'Settings') { setActivePortalPage('settings'); setSelectedTeam(null) } if (item === 'Portal editor') { setEditorReturnState({ developerView, page: activePortalPage, selectedTeam, teamDetailTab }); setActivePortalPage('portal editor'); setSelectedTeam(null) } }} type="button">{item}{item === 'Developers' && <b>1</b>}{item === 'Applications' && <b>4</b>}</button>)}</div>
         </div>
         <SideItem icon="dollar">Metering &amp; Billing</SideItem>
         <SideItem icon="chart">Observability</SideItem>
@@ -296,10 +389,10 @@ function App() {
       </div>
       <div className="sidebar-bottom"><div className="sidebar-footer-item"><span className="org-avatar">A</span> Acme Inc.<Icon name="chevron" size={20} /></div><div className="sidebar-footer-item"><span className="flag">🇺🇸</span> US (North America)<Icon name="chevron" size={20} /></div></div>
     </aside>
-    <main className="main-content">
-      <div className="page-header"><div className="breadcrumbs"><Icon className="crumb-icon" name="portal" size={18} /><a href="#dev-portal">Dev Portal</a><span>/</span><a href="#portals">KongAir</a><span>/</span>{selectedTeam && <><button className="breadcrumb-button" onClick={() => setSelectedTeam(null)} type="button">Developers</button><span>/</span><button className="breadcrumb-button" onClick={() => setSelectedTeam(null)} type="button">Teams</button><span>/</span></>}</div><h1>{selectedTeam ? selectedTeam.name : activePortalPage === 'developers' ? 'Developers' : 'Settings'}</h1>{selectedTeam && <TeamDetailActions showToast={showToast} />}<nav className="tabs">{selectedTeam ? null : activePortalPage === 'developers' ? <><button className={developerView === 'developers' ? 'active' : ''} onClick={() => setDeveloperView('developers')} type="button"><span>Developers <b>1</b></span></button><button className={developerView === 'teams' ? 'active' : ''} onClick={() => setDeveloperView('teams')} type="button"><span>Teams</span></button></> : ['General', 'Custom domain', 'Security', 'Integrations', 'Team mapping', 'Audit logs'].map(tab => <button className={tab === 'Team mapping' ? 'active' : ''} key={tab}><span>{tab}</span></button>)}</nav></div>
-      <div className="content">
-        {selectedTeam ? <TeamDetailContent detailTab={teamDetailTab} onDetailTabChange={setTeamDetailTab} showToast={showToast} team={selectedTeam} /> : activePortalPage === 'developers' ? <DevelopersContent mappedGroups={mappedGroups} onSelectTeam={(team) => { setSelectedTeam(team); setTeamDetailTab('developers') }} showToast={showToast} teams={portalTeams} view={developerView} /> : <>
+    <main className={activePortalPage === 'portal editor' ? 'main-content portal-editor-main' : 'main-content'}>
+      {activePortalPage !== 'portal editor' && <div className="page-header"><div className="breadcrumbs"><Icon className="crumb-icon" name="portal" size={18} /><a href="#dev-portal">Dev Portal</a><span>/</span><a href="#portals">KongAir</a><span>/</span>{selectedTeam && <><button className="breadcrumb-button" onClick={() => setSelectedTeam(null)} type="button">Developers</button><span>/</span><button className="breadcrumb-button" onClick={() => setSelectedTeam(null)} type="button">Teams</button><span>/</span></>}</div><h1>{selectedTeam ? selectedTeam.name : activePortalPage === 'developers' ? 'Developers' : 'Settings'}</h1>{selectedTeam && <TeamDetailActions showToast={showToast} />}<nav className="tabs">{selectedTeam ? null : activePortalPage === 'developers' ? <><button className={developerView === 'developers' ? 'active' : ''} onClick={() => setDeveloperView('developers')} type="button"><span>Developers <b>1</b></span></button><button className={developerView === 'teams' ? 'active' : ''} onClick={() => setDeveloperView('teams')} type="button"><span>Teams</span></button></> : ['General', 'Custom domain', 'Security', 'Integrations', 'Team mapping', 'Audit logs'].map(tab => <button className={tab === 'Team mapping' ? 'active' : ''} key={tab}><span>{tab}</span></button>)}</nav></div>}
+      <div className={activePortalPage === 'portal editor' ? 'content portal-editor-content' : 'content'}>
+        {activePortalPage === 'portal editor' ? <PortalEditorContent onExit={() => { setActivePortalPage(editorReturnState.page); setDeveloperView(editorReturnState.developerView); setSelectedTeam(editorReturnState.selectedTeam); setTeamDetailTab(editorReturnState.teamDetailTab) }} showToast={showToast} /> : selectedTeam ? <TeamDetailContent detailTab={teamDetailTab} onDetailTabChange={setTeamDetailTab} showToast={showToast} team={selectedTeam} /> : activePortalPage === 'developers' ? <DevelopersContent mappedGroups={mappedGroups} onSelectTeam={(team) => { setSelectedTeam(team); setTeamDetailTab('developers') }} showToast={showToast} teams={portalTeams} view={developerView} /> : <>
         <section className="tile simple-tile"><div><h2>Konnect mapping</h2><p>Manage Developer Portal team memberships with Konnect.</p></div><Toggle active={konnectMapping} onClick={() => setKonnectMapping(!konnectMapping)} /></section>
         <section className="tile idp-tile">
           <div className="tile-heading idp-heading">

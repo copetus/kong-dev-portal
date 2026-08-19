@@ -143,6 +143,19 @@ All Developers/Teams-related tables intentionally share the same rhythm:
 
 The shared normalization is at the end of `styles.css` under `Developers uses one table rhythm in every view` and should be updated before adding one-off table overrides.
 
+## Portal editor base workspace
+
+- Sidebar Dev Portal > **Portal editor** opens the base editor workspace (`PortalEditorContent`).
+- It is intentionally structural/static for now; Publish, Save, and View changes display local feedback only.
+- The workspace includes:
+  - a narrow tool rail;
+  - a page-structure tree with Pages/Snippets and page states;
+  - an AI chat pane with a sample prompt, working state, and compose area;
+  - a line-numbered source/code pane;
+  - a desktop preview pane with preview device controls and a sample page canvas.
+- The shared top control bar contains the page status plus View changes, help/more controls, Publish, and Save.
+- Editor layout styles use the `editor-*` namespace near the end of `styles.css`. Keep controls compact and avoid adding complex editor behavior until a later request.
+
 ## Current local state model
 
 Important `App` state values in `src/main.jsx`:
