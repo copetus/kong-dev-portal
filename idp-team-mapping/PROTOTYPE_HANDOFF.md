@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This is a desktop-only React/Vite prototype of Konnect Developer Portal flows. The first completed flow is **Identity provider team mapping**; the app now also contains a **Developers / Teams** area and individual team detail view.
+This is a desktop-only React/Vite prototype of Konnect Developer Portal flows. Its implemented areas are **Identity provider team mapping**, **Developers / Teams** (including individual team detail), and a functional **Portal editor** workspace.
 
-The prototype is visual and interaction-focused. Most actions update local React state and display confirmation feedback rather than persisting to an API.
+The prototype is visual and interaction-focused. Most actions update local React state and display confirmation feedback rather than persisting to an API. The Portal editor additionally saves its Markdown document to browser `localStorage`; its preview updates in memory as the user edits.
 
 ## Repository and startup
 
@@ -16,7 +16,7 @@ The prototype is visual and interaction-focused. Most actions update local React
   - `public/favicon.svg` — Kong favicon
 - Start locally: `npm install` then `npm run dev`
 - Validate: `npm run build`
-- GitHub Pages: `.github/workflows/deploy-pages.yml` builds this nested app and deploys it on pushes to `main`. Vite uses `/kong-dev-portal/` as its production base path.
+- Vite uses `/` locally and `/kong-dev-portal/` when `GITHUB_ACTIONS` is set. There is no GitHub Actions workflow in the current working tree, so deployment configuration must be added or restored before relying on GitHub Pages.
 
 The application is self-contained. It does not depend on the starter-kit parent directory after cloning.
 
@@ -51,6 +51,7 @@ The application is self-contained. It does not depend on the starter-kit parent 
 - The provider choice control offers OIDC and SAML.
 - Choosing a provider opens a configuration slideout only. It must not replace the mapping content area immediately.
 - The provider control is a secondary-style control: hover only darkens its existing outline/text; it must never turn into a filled primary button.
+- **OIDC is the implemented provider path.** Choosing SAML opens a labelled slideout with placeholder copy only; it has no fields, save action, or mapping-table transition yet.
 
 ### OIDC slideout
 
@@ -84,6 +85,7 @@ The application is self-contained. It does not depend on the starter-kit parent 
   - Clicking the field opens the menu without removing values.
   - Clicking outside dismisses the menu.
 - Saving creates/updates `mappedGroups[team.name]`, closes the modal, and shows a mapping confirmation toast.
+- The available group list starts empty in a fresh session; group values are introduced by entering custom values.
 
 ### Clear mapping
 
@@ -143,28 +145,29 @@ All Developers/Teams-related tables intentionally share the same rhythm:
 
 The shared normalization is at the end of `styles.css` under `Developers uses one table rhythm in every view` and should be updated before adding one-off table overrides.
 
-## Portal editor base workspace
+## Portal editor workspace
 
-- Sidebar Dev Portal > **Portal editor** opens the base editor workspace (`PortalEditorContent`).
-- It is intentionally structural/static for now; Publish, Save, and View changes display local feedback only.
+- Sidebar Dev Portal > **Portal editor** opens `PortalEditorContent` and the exit control restores the preceding Dev Portal page/view.
+- It includes real local editor interactions, but remains a prototype rather than a connected publishing system.
 - The workspace includes:
   - a narrow tool rail;
   - a page-structure tree with Pages/Snippets and page states;
-  - an AI chat pane with a sample prompt, working state, and compose area;
-  - a line-numbered source/code pane;
-  - a desktop preview pane with preview device controls and a sample page canvas.
-- The shared top control bar contains the page status plus View changes, help/more controls, Publish, and Save.
-- Editor layout styles use the `editor-*` namespace near the end of `styles.css`. Keep controls compact and avoid adding complex editor behavior until a later request.
+  - an AI chat pane with suggestions, compose interaction, simulated working state, and a canned response;
+  - a line-numbered Markdown source pane with syntax highlighting, hover help, autocomplete, and local undo/redo history;
+  - a live desktop preview that renders supported Markdown and `::page-section` / `::page-hero` components.
+- Users can show/hide and resize the chat, code, and preview panes. The syntax-help modal explains the supported Markdown and component syntax.
+- Save persists the editor document under `kong-portal-editor-markdown` in browser `localStorage`; Publish and View changes only display local toast feedback. **New page** opens an inline name field at the end of the page list; pressing Enter adds a local page row. Each page row’s more button uses the shared dropdown treatment with working **Edit name** and **Delete** actions. Parent page rows expand/collapse, and page rows can be dragged before, after, or onto another row to reorder or nest them; expanded child groups retain the vertical scope line. The device controls, preview external-link action, and most rail controls are presentational at this stage.
+- Editor layout styles use the `editor-*` namespace near the end of `styles.css`. Keep controls compact and preserve the documented local behaviors unless expanding the editor deliberately.
 
 ## Current local state model
 
 Important `App` state values in `src/main.jsx`:
 
-- `activePortalPage`: `settings` or `developers`.
+- `activePortalPage`: `settings`, `developers`, or `portal editor`.
 - `developerView`: `developers` or `teams`.
 - `selectedTeam`: selected team object or `null`.
 - `teamDetailTab`: active individual team section.
-- `provider`: identity provider, currently configured by OIDC flow.
+- `provider`: configured identity provider. Only the OIDC save flow currently sets this value and reveals the mapping table.
 - `idpMappingEnabled`: identity mapping toggle state.
 - `mappedGroups`: object keyed by team name, whose values are arrays of mapped group strings.
 - `mapGroupsTeam`, `selectedGroups`, `availableGroups`, `groupQuery`, `groupPickerOpen`: modal/multiselect state.
@@ -172,12 +175,15 @@ Important `App` state values in `src/main.jsx`:
 - `oidcSlideoutOpen`, `oidcSlideoutClosing`, `oidcForm`, `advancedOpen`: configuration slideout state.
 - `toast`: lower-right feedback state.
 
+Portal-editor-local state lives inside `PortalEditorContent`, including pane visibility/widths, Markdown, syntax help/autocomplete, local undo/redo history, simulated chat, and the saved `localStorage` document.
+
 ## Icons
 
 `Icon` in `src/main.jsx` contains inline paths sourced from the official Kong/icons repository’s `svg/solid` assets. Continue using this map for new icons rather than substituting unrelated glyphs or emoji. The map currently includes the app shell, status, close/remove, search, filter, more, copy, and mapping-related icons.
 
 ## Verification and git notes
 
-- Run `npm run build` after implementation changes. Builds currently succeed, though Vite prints a non-blocking recommendation to update Node from `22.11.0` to `22.12+`.
+- Last verified: **2026-08-20**. `npm run build` succeeds (30 modules transformed; output is written to `dist/`). Vite prints a non-blocking recommendation to move Node from `22.11.0` to `22.12+` or newer.
+- Run `npm run build` after implementation changes.
 - Do not commit or push changes unless the user explicitly asks.
-- The app repository has existing, ongoing working-tree changes by design; preserve unrelated work.
+- At this handoff, `package.json`, `package-lock.json`, `src/main.jsx`, and `src/styles.css` have uncommitted modifications; `public/sparkles-icon.lottie` is untracked. Preserve or explicitly review them before committing.
