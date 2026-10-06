@@ -2,6 +2,7 @@ import React, { StrictMode, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import './styles.css'
+import kongLogo from './assets/kong-logo.png'
 
 // SVG paths below are from Kong/icons (svg/solid), kept inline so this React
 // prototype can use the official assets without pulling in the Vue-only package.
@@ -876,7 +877,7 @@ function App() {
 
   return <div className={activePortalPage === 'portal editor' ? 'app-shell app-shell--editor' : 'app-shell'}>
     <header className="topbar">
-      <div className="brand"><span className="brand-mark">◆</span><span>KONNECT</span></div>
+      <div className="brand"><img className="brand-mark" src={kongLogo} alt="Kong" width="32" height="32" /><span>KONNECT</span></div>
       <div className="search"><Icon name="search" size={25} /><span>Quick search...</span><kbd>⌘K</kbd></div>
       <div className="header-actions"><Icon name="help" size={27} /><div className="notification"><Icon name="bell" size={27} /><i /></div><div className="avatar">ww</div></div>
     </header>
